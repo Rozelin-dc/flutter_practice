@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import './state.dart';
+import 'word_state.dart';
 
-class FavoritesPage extends StatelessWidget {
+class FavoritesPage extends ConsumerWidget {
   const FavoritesPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    var appState = context.watch<MyAppState>();
+    var wordState = ref.watch(wordProvider);
+    var wordStateNotifier = ref.read(wordProvider.notifier);
 
     return Scaffold(
       appBar:
@@ -18,11 +19,11 @@ class FavoritesPage extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: ListView(
           shrinkWrap: true,
-          children: appState.favorites
+          children: wordState.favorites
               .map((pair) => ListTile(
                     leading: IconButton(
                         onPressed: () {
-                          appState.toggleFavorite(pair);
+                          wordStateNotifier.toggleFavorite(pair);
                         },
                         icon: Icon(Icons.delete),
                         color: theme.colorScheme.error),

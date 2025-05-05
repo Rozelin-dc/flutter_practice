@@ -1,16 +1,17 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import './state.dart';
+import './word_state.dart';
 
-class GeneratorPage extends StatelessWidget {
+class GeneratorPage extends ConsumerWidget {
   const GeneratorPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
+  Widget build(BuildContext context, WidgetRef ref) {
+    var wordState = ref.watch(wordProvider);
+    var wordStateNotifier = ref.read(wordProvider.notifier);
+    var pair = wordState.current;
 
     return Scaffold(
       appBar: AppBar(
@@ -27,18 +28,18 @@ class GeneratorPage extends StatelessWidget {
               children: [
                 ElevatedButton.icon(
                   onPressed: () {
-                    appState.toggleFavorite();
+                    wordStateNotifier.toggleFavorite();
                   },
-                  icon: Icon(appState.favorites.contains(pair)
+                  icon: Icon(wordState.favorites.contains(pair)
                       ? Icons.favorite
                       : Icons.favorite_border),
-                  label: Text(appState.favorites.contains(pair)
+                  label: Text(wordState.favorites.contains(pair)
                       ? 'Unfavorite'
                       : 'Favorite'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    appState.getNext();
+                    wordStateNotifier.getNext();
                   },
                   child: Text('Next'),
                 ),
