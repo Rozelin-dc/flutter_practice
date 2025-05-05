@@ -4,15 +4,11 @@ import 'package:provider/provider.dart';
 
 import './state.dart';
 
-class MyHomePage extends StatelessWidget {
+class GeneratorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
-
-    IconData icon = appState.favorites.contains(pair)
-        ? Icons.favorite
-        : Icons.favorite_border;
 
     return Scaffold(
       body: Center(
@@ -29,7 +25,9 @@ class MyHomePage extends StatelessWidget {
                   onPressed: () {
                     appState.toggleFavorite();
                   },
-                  icon: Icon(icon),
+                  icon: Icon(appState.favorites.contains(pair)
+                      ? Icons.favorite
+                      : Icons.favorite_border),
                   label: Text(appState.favorites.contains(pair)
                       ? 'Unfavorite'
                       : 'Favorite'),
