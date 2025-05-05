@@ -5,12 +5,16 @@ import 'package:provider/provider.dart';
 import './state.dart';
 
 class GeneratorPage extends StatelessWidget {
+  const GeneratorPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
     return Scaffold(
+      appBar: AppBar(
+          title: Text('Word Generator'), automaticallyImplyLeading: false),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

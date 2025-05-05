@@ -12,7 +12,8 @@ class FavoritesPage extends StatelessWidget {
     var appState = context.watch<MyAppState>();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Favorites')),
+      appBar:
+          AppBar(title: Text('Favorites'), automaticallyImplyLeading: false),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: ListView(
