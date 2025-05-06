@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'navigation_rail.dart';
 import '../pages/generator_page.dart';
 import '../pages/favorites_page.dart';
+import '../pages/example_page.dart';
 
 final router = GoRouter(
   debugLogDiagnostics: true,
@@ -19,6 +20,10 @@ final router = GoRouter(
               name: 'favorites',
               path: MyPath.favorites,
               builder: (context, state) => const FavoritesPage()),
+          GoRoute(
+              name: 'example',
+              path: MyPath.example,
+              builder: (context, state) => const ExamplePage()),
         ])
   ],
 );
@@ -26,4 +31,5 @@ final router = GoRouter(
 class MyPath {
   static const String home = '/';
   static const String favorites = '/favorites';
+  static const String example = '/example';
 }

@@ -52,6 +52,12 @@ class MyNavigationRail extends StatelessWidget {
           label: Text('Favorites'),
         ),
         path: MyPath.favorites),
+    _RailItem(
+        item: NavigationRailDestination(
+          icon: Icon(Icons.auto_stories),
+          label: Text('Example'),
+        ),
+        path: MyPath.example),
   ];
 
   int _calcSelectedIndex(BuildContext context) {
