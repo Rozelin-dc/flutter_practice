@@ -1,8 +1,8 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../stores/word_state.dart';
+import '../components/word_card.dart';
 
 class GeneratorPage extends ConsumerWidget {
   const GeneratorPage({super.key});
@@ -46,35 +46,6 @@ class GeneratorPage extends ConsumerWidget {
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class WordCard extends StatelessWidget {
-  const WordCard({
-    super.key,
-    required this.pair,
-  });
-
-  final WordPair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textStyle = theme.textTheme.displayMedium?.copyWith(
-      color: theme.colorScheme.onPrimary,
-    );
-
-    return Card(
-      color: theme.colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Text(
-          pair.asLowerCase,
-          style: textStyle,
-          semanticsLabel: "${pair.first} ${pair.second}",
         ),
       ),
     );

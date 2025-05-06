@@ -48,6 +48,12 @@ class MyNavigationRail extends StatelessWidget {
         path: MyPath.home),
     _RailItem(
         item: NavigationRailDestination(
+          icon: Icon(Icons.upload),
+          label: Text('Self Input'),
+        ),
+        path: MyPath.selfInput),
+    _RailItem(
+        item: NavigationRailDestination(
           icon: Icon(Icons.favorite),
           label: Text('Favorites'),
         ),
