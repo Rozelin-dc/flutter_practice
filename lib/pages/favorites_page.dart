@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'word_state.dart';
+import '../stores/word_state.dart';
 
 class FavoritesPage extends ConsumerWidget {
   const FavoritesPage({super.key});

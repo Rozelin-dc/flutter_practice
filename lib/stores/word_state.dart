@@ -21,10 +21,10 @@ class WordNotifier extends Notifier<WordState> {
   void toggleFavorite([WordPair? pair]) {
     var target = pair ?? state.current;
     Set<WordPair> favorites = state.favorites;
-    if (state.favorites.contains(target)) {
-      state.favorites.remove(target);
+    if (favorites.contains(target)) {
+      favorites.remove(target);
     } else {
-      state.favorites.add(target);
+      favorites.add(target);
     }
     state = WordState(state.current, favorites);
   }

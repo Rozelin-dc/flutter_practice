@@ -2,7 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import './word_state.dart';
+import '../stores/word_state.dart';
 
 class GeneratorPage extends ConsumerWidget {
   const GeneratorPage({super.key});

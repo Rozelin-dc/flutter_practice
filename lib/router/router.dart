@@ -1,8 +1,8 @@
 import 'package:go_router/go_router.dart';
 
-import './navigation_rail.dart';
-import './generator_page.dart';
-import './favorites_page.dart';
+import 'navigation_rail.dart';
+import '../pages/generator_page.dart';
+import '../pages/favorites_page.dart';
 
 final router = GoRouter(
   debugLogDiagnostics: true,

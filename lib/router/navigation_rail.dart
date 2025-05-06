@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import './router.dart';
+import 'router.dart';
 
 class MyNavigationRail extends StatelessWidget {
   const MyNavigationRail({required this.child, super.key});
