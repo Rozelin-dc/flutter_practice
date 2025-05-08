@@ -1,53 +1,49 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/components/word_card.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../components/word_card.dart';
 import '../stores/word_state.dart';
 
-class SelfInputPage extends ConsumerStatefulWidget {
+class SelfInputPage extends HookConsumerWidget {
   const SelfInputPage({super.key});
 
   @override
-  ConsumerState<SelfInputPage> createState() => _SelfInputPageState();
-}
-
-class _SelfInputPageState extends ConsumerState<SelfInputPage> {
-  final TextEditingController _firstController = TextEditingController();
-  final TextEditingController _secondController = TextEditingController();
-  WordPair? pair;
-
-  @override
-  void dispose() {
-    _firstController.dispose();
-    _secondController.dispose();
-    super.dispose();
-  }
-
-  void _updatePair() {
-    if (_firstController.text.isEmpty || _secondController.text.isEmpty) {
-      return;
-    }
-
-    setState(() {
-      pair = WordPair(_firstController.text, _secondController.text);
-    });
-  }
-
-  void _clearPair() {
-    setState(() {
-      pair = null;
-      _firstController.clear();
-      _secondController.clear();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final wordStateNotifier = ref.read(wordProvider.notifier);
 
+    final pair = useState<WordPair?>(null);
+
+    final firstController = useTextEditingController();
+    final secondController = useTextEditingController();
+    void updatePair() {
+      if (firstController.text.isEmpty || secondController.text.isEmpty) {
+        pair.value = null;
+      } else {
+        pair.value = WordPair(firstController.text, secondController.text);
+      }
+    }
+    useEffect(() {
+      firstController.addListener(updatePair);
+      secondController.addListener(updatePair);
+
+      return () {
+        firstController.removeListener(updatePair);
+        secondController.removeListener(updatePair);
+        firstController.dispose();
+        secondController.dispose();
+      };
+    }, []);
+
+    void clearPair() {
+      firstController.clear();
+      secondController.clear();
+    }
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Self Input'), automaticallyImplyLeading: false),
+      appBar: AppBar(
+          title: const Text('Self Input'), automaticallyImplyLeading: false),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -55,29 +51,27 @@ class _SelfInputPageState extends ConsumerState<SelfInputPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             spacing: 10,
             children: [
-              WordCard(pair: pair),
+              WordCard(pair: pair.value),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 spacing: 5,
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: _firstController,
+                      controller: firstController,
                       decoration: const InputDecoration(labelText: 'first'),
-                      onChanged: (value) => _updatePair(),
                     ),
                   ),
                   Expanded(
                     child: TextField(
-                      controller: _secondController,
+                      controller: secondController,
                       decoration: const InputDecoration(labelText: 'second'),
-                      onChanged: (value) => _updatePair(),
                     ),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      wordStateNotifier.toggleFavorite(WordPair(_firstController.text, _secondController.text));
-                      _clearPair();
+                      wordStateNotifier.toggleFavorite(pair.value);
+                      clearPair();
                     },
                     child: const Text('Add'),
                   ),
