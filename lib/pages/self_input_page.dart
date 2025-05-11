@@ -11,6 +11,8 @@ class SelfInputPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+
     final wordStateNotifier = ref.read(wordProvider.notifier);
 
     final pair = useState<WordPair?>(null);
@@ -24,6 +26,7 @@ class SelfInputPage extends HookConsumerWidget {
         pair.value = WordPair(firstController.text, secondController.text);
       }
     }
+
     useEffect(() {
       firstController.addListener(updatePair);
       secondController.addListener(updatePair);
@@ -69,12 +72,16 @@ class SelfInputPage extends HookConsumerWidget {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      wordStateNotifier.toggleFavorite(pair.value);
-                      clearPair();
-                    },
-                    child: const Text('Add'),
-                  ),
+                      onPressed: () {
+                        wordStateNotifier.toggleFavorite(pair.value);
+                        clearPair();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.colorScheme.primary,
+                      ),
+                      child: Text('Add',
+                          style:
+                              TextStyle(color: theme.colorScheme.onPrimary))),
                 ],
               ),
             ],
